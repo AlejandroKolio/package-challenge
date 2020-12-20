@@ -68,15 +68,15 @@ public class PackageFinderUtils {
         final double limit = Double.parseDouble(parts[0]);
 
         final List<Item> validItems = mapItems(parts[1]).stream()
-                .filter(item -> ValidationUtils.isValid(item, i -> item.getWeight() > 100,
+                .filter(item -> ValidationUtils.isValid(item, i -> item.getWeight() >= 100,
                         "weight is greater than 100"))
-                .filter(item -> ValidationUtils.isValid(item, i -> item.getPrice() > 100, "price is greater than 100"))
+                .filter(item -> ValidationUtils.isValid(item, i -> item.getPrice() >= 100, "price is greater than 100"))
                 .collect(toList());
 
         packages.add(new PackageRequest(limit, validItems));
 
         return packages.stream()
-                .filter(pack -> ValidationUtils.isValid(pack, i -> pack.getLimit() > 100,
+                .filter(pack -> ValidationUtils.isValid(pack, i -> pack.getLimit() >= 100,
                         "package limit is greater than 100"))
                 .filter(pack -> ValidationUtils.isValid(pack, i -> pack.getItems().size() > 15,
                         "package must not be greater than 15"))
